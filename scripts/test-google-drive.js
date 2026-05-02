@@ -25,7 +25,7 @@ async function testGoogleConnection() {
   const auth = new google.auth.GoogleAuth({
     credentials: { client_email: clientEmail, private_key: privateKey },
     scopes: [
-      'https://www.googleapis.com/auth/drive.file',
+      'https://www.googleapis.com/auth/drive',
       'https://www.googleapis.com/auth/drive.metadata.readonly',
       'https://www.googleapis.com/auth/spreadsheets.readonly'
     ],
@@ -35,6 +35,18 @@ async function testGoogleConnection() {
   const sheets = google.sheets({ version: 'v4', auth });
 
   try {
+    // 0. Listar archivos visibles (Debug)
+    console.log('\n🔍 Listando primeros 10 archivos visibles para esta cuenta...');
+    const list = await drive.files.list({
+      pageSize: 10,
+      fields: 'files(id, name)',
+    });
+    if (list.data.files.length === 0) {
+      console.log('⚠️  No se encontraron archivos visibles para esta cuenta.');
+    } else {
+      list.data.files.forEach(f => console.log(`- ${f.name} (${f.id})`));
+    }
+
     // 1. Probar acceso a la carpeta
     console.log('\n🔍 Probando acceso a la carpeta...');
     const folder = await drive.files.get({
