@@ -1,9 +1,0 @@
-{
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/api/admin/migrate-sheet": "pages/api/admin/migrate-sheet.js",
-  "/admin/analytics": "pages/admin/analytics.js",
-  "/admin/settings": "pages/admin/settings.js"
-}
