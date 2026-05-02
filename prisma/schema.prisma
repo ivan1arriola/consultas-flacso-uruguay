@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Program {
+  id                    Int      @id @default(autoincrement())
+  wpId                  String   @unique
+  legacyId              String?  @unique
+  abbreviation          String?
+  type                  String?
+  name                  String
+  email                 String?
+  cartaLink             String?
+  preinscriptionLink    String?
+  enrollmentDeadline    String?
+  phase1Active          Boolean  @default(false)
+  phase2Active          Boolean  @default(false)
+  phase3Active          Boolean  @default(false)
+  nextStartText         String?
+  duration              String?
+  internationalValidity String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model Submission {
+  id              Int      @id @default(autoincrement())
+  postId          String?
+  postTitle       String?
+  firstName       String?
+  lastName        String?
+  name            String?
+  email           String
+  country         String?
+  educationLevel  String?
+  profession      String?
+  urlBase         String?
+  meta            String?
+  createdAt       DateTime @default(now())
+}
+
+model WebhookEvent {
+  id          Int      @id @default(autoincrement())
+  eventType   String
+  payload     String
+  processedAt DateTime @default(now())
+}
+
+model ExcludedEmail {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  reason    String?
+  createdAt DateTime @default(now())
+}
